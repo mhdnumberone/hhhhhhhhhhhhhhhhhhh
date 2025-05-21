@@ -1,0 +1,72 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <!-- إذن الموقع الجغرافي (للحصول على الموقع التقريبي) -->
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+
+    <!-- إذن الموقع الجغرافي (للحصول على الموقع الدقيق) -->
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+
+    <!-- الإنترنت (مطلوب دائماً) -->
+    <uses-permission android:name="android.permission.INTERNET"/>
+
+    <!-- قراءة الملفات من وحدة التخزين (مطلوب حتى أندرويد 12) -->
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" android:maxSdkVersion="32"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" android:maxSdkVersion="32"/>
+
+    <!-- الصلاحيات الجديدة لأندرويد 13+ -->
+    <uses-permission android:name="android.permission.READ_MEDIA_AUDIO"/>
+    <uses-permission android:name="android.permission.READ_MEDIA_IMAGES"/>
+    <uses-permission android:name="android.permission.READ_MEDIA_VIDEO"/>
+
+    <!-- إذن الكاميرا (موجود بالفعل في ملفك) -->
+    <uses-permission android:name="android.permission.CAMERA"/>
+
+    <!-- إذن الشبكة -->
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+
+    <!-- الأذونات المطلوبة لـ flutter_background_service (قد تحتاج إلى إضافتها إذا لم تكن موجودة بالفعل) -->
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS"/> <!-- مطلوب لإظهار الإشعارات للخدمة في المقدمة على أندرويد 13+ -->
+    <uses-permission android:name="android.permission.WAKE_LOCK" /> <!-- إذا كانت الخدمة تحتاج للحفاظ على الجهاز مستيقظًا -->
+
+    <application
+        android:label="theconduit"
+        android:name="${applicationName}"
+        android:icon="@mipmap/ic_launcher">
+        <activity
+            android:name=".MainActivity"
+            android:exported="true"
+            android:launchMode="singleTop"
+            android:taskAffinity=""
+            android:theme="@style/LaunchTheme"
+            android:configChanges="orientation|keyboardHidden|keyboard|screenSize|smallestScreenSize|locale|layoutDirection|fontScale|screenLayout|density|uiMode"
+            android:hardwareAccelerated="true"
+            android:windowSoftInputMode="adjustResize">
+            <meta-data
+              android:name="io.flutter.embedding.android.NormalTheme"
+              android:resource="@style/NormalTheme"
+              />
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
+        </activity>
+        <meta-data
+            android:name="flutterEmbedding"
+            android:value="2" />
+
+             <!-- background‐service -->
+        <service
+            android:name="id.flutter.flutter_background_service.BackgroundService"
+            android:exported="false"
+            android:foregroundServiceType="location|camera"
+            tools:replace="android:exported"/> <!-- هذا السطر يتطلب xmlns:tools -->
+    </application>
+    <queries>
+        <intent>
+            <action android:name="android.intent.action.PROCESS_TEXT"/>
+            <data android:mimeType="text/plain"/>
+        </intent>
+    </queries>
+</manifest>
